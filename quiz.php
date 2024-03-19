@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-
+ 
 <?php
 
 // Vérifie si les champs ont été remplis puis récupère les valeurs et crée un formulaire sur la base  de ces données
