@@ -1,0 +1,176 @@
+/* CSS de la navbar */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #cdc3c3;
+}
+
+.navbar{
+    width: 100%;
+    height: 13vh;
+    background-color: #734db0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 2px 2px #efab23;
+}
+ 
+.left-div{
+    width: 50%;
+    height: 10vh;
+    background-color:#734db0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ 
+/* img du logo quizzeo */
+.img{
+    width: 250px;
+    height: 70px;
+}
+ 
+.right-div{
+    width: 50%;
+    height: 100%;
+    background-color: #734db0;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+ 
+/* Le bouton logout */
+.button {
+    position: relative;
+    background-color: #f1696a;
+    border: none;
+    font-size: 18px;
+    color: #f5eeee;
+    padding: 20px;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+    margin-right: 80px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ 
+.button:after {
+    content: "";
+    background: #f1f1f1;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+ 
+.button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s;
+}
+/* Fin Navbar */
+
+/* Style de la boîte de dialogue */
+.boite_d {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Style du contenu de la boîte de dialogue */
+.content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+}
+
+/* Style pour le titre de la boîte de dialogue */
+.content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Style pour les champs de formulaire */
+.content input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style pour le bouton de fermeture */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #666;
+}
+
+/* Style pour le bouton d'ouverture */
+
+.boite-center{
+    width: 100%;
+    height: 10vh;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+
+}
+#open-boite_d {
+    background-color: #8c73b4;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#open-boite_d:hover {
+    background-color: #fdc76a;
+}
+
+/* Style pour le bouton Soumettre */
+.content input[type="submit"] {
+    background-color: #8c73b4;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.content input[type="submit"]:hover {
+    background-color: #fdc76a;
+}

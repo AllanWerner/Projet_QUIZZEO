@@ -1,0 +1,144 @@
+<?php
+session_start();
+ 
+function ind_debut($nb, $t) {
+    return $nb * ($t + 3) ;
+}
+ 
+function ind_fin($nb, $t) {
+    return $t + 2 + $nb*($t + 3);
+}
+ 
+if (isset($_GET['name'])) {
+    $name_quiz = $_GET['name'];
+    $file = 'quiz.csv';
+    $quiz_found = false;
+ 
+    if (($handle = fopen($file, 'r')) !== false) {
+        while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+            $test_info = str_getcsv($data[0]);
+ 
+            if ($test_info[0] == $name_quiz) {
+                $quiz_found = true;
+                $quiz = $data;
+                break;
+            }
+        }
+        fclose($handle);
+    }
+ 
+    if ($quiz_found) {
+        // Convertir la ligne CSV en tableau
+        $info_quiz = str_getcsv($quiz[0]);
+        $contenu = str_getcsv($quiz[1]);
+ 
+        $nbq = $info_quiz[2];
+        $np = $info_quiz[3];
+        $duree = $info_quiz[4];
+ 
+        $reponses_quiz = fopen("answer_".$name_quiz.".csv", "w");
+ 
+        echo  "<form action='resultat.php?name=".$name_quiz."&nbq=".$nbq."' method='post' >";
+       
+        echo "<h1> Intitulé du quiz : ".$info_quiz[0]."</h1>" ;
+        echo "<div class='minuteur' id='minuteur'></div>";
+       
+       
+        for ($i = 0; $i < $nbq; $i++) {
+            $question = array();
+            $debut_question = ind_debut($i, $np) ;
+            $fin_question = ind_fin($i, $np);
+           
+            for ($j = $debut_question; $j <= $fin_question; $j++) {
+                $question[] = $contenu[$j];
+            }
+ 
+           
+            echo "<div>";
+            echo "Question n°" . ($i + 1) . " : " . $question[0] . "<br />";
+            for ($k = 1; $k <= $np; $k++) {
+                echo "<label>";
+                echo "<input type='radio' name='q".($i + 1)."' value='" . $question[$k] . "'>" . $question[$k] . "<br />";
+                echo "</label><br />";
+            }
+            echo "</div>";
+ 
+            $rep = [ $question[0], $question[$np + 1], $question[$np + 2]];
+            fputcsv($reponses_quiz,$rep);  
+        }
+ 
+        fclose( $reponses_quiz );
+ 
+        echo "<div>";
+        echo "<button id='startTimer'>Commencer</button>";
+        echo "<input type = 'submit' class = 'submitBtn' value = 'Terminer'>";
+        echo "</div>";
+ 
+        echo "</form>";
+ 
+    } else {
+        echo 'Quiz non trouvé.';
+    }
+}
+?>
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .minuteur {
+            font-size: 24px;
+            text-align: center;
+        }
+ 
+        .submitBtn{
+            display: none; /* Cache la boîte de dialogue par défaut */
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+   
+ 
+    <script>
+       
+        const duree = <?php echo $duree * 60; ?>;    // Imprimer la valeur de la variable duree dans le script
+       
+        const endTime = Date.now() + duree * 1000;   // Date de fin du minuteur en  millisecondes
+ 
+        var startButton = document.getElementById('startTimer');
+        var stopButton = document.querySelector('.submitBtn');
+ 
+        function updateMinuteur() {
+            const currentTime = Date.now();
+            const remainingTime = Math.max(0, endTime - currentTime);
+ 
+            const minutes = Math.floor(remainingTime / 60000);
+            const seconds = Math.floor((remainingTime % 60000) / 1000);
+            document.getElementById("minuteur").innerHTML = `Temps restant : ${minutes} minutes ${seconds} secondes`;
+ 
+            if (seconds === 0 && minutes === 0) {
+                document.getElementById("minuteur").innerHTML = "Temps écoulé !";
+                window.location.href = this.action;    
+            }
+        }
+ 
+        function startTimer() {
+            const interval = setInterval(updateMinuteur, 1000);
+        }
+ 
+        // Écouteur d'événement pour le bouton de démarrage
+        startButton.addEventListener('click', function() {
+            startTimer();
+            startButton.disabled = true;  // Désactiver le bouton une fois que le minuteur est démarré
+            stopButton.style.display = 'block';  // Active le bouton de fin
+        });
+ 
+        stopButton.addEventListener('click', function() {
+            window.location.href = this.action;
+        });
+    </script>
+</body>
+</html>
