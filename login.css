@@ -8,7 +8,7 @@
     font-family: 'Poppins', sans-serif;
 }
 body{
-    background: url("Login_back.jpeg");
+    background: url("fond.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -40,6 +40,7 @@ body{
     background-position: center;
     width: 250px;
     height: 70px;
+    margin-top: 15px;
     transition: all 0.2s ease-in-out; /* Avoir una animation fluide */
     }
 
