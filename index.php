@@ -1,1 +1,1 @@
-<?php header('location: login2.php');?>
+<?php header('location: login.php');?>
