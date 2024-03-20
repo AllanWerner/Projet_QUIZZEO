@@ -13,7 +13,7 @@
  <div class="wrapper">
     <nav class="nav">
         <div class="nav-logo">
-            <img class='logo' src='quizzeo-removebg-preview.png'>
+            <img class='logo' src='./images/logo.png'>
         </div>
         
         <div class="nav-button">
