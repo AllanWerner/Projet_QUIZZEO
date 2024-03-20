@@ -63,9 +63,11 @@ if (isset($_GET['root']) && $_GET['root'] == 'login') {
 
 if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
  
-    $registre = fopen($file, 'a+');
+    $registre = fopen($file, 'a+'); 
+
     $ind = 0;
     if(filesize($file) !== 0){
+        
         while($line = fgetcsv($registre) !== FALSE) {
             $ind++;      // pour récupérer l'indice du dernier  élément inséré dans le fichier
         }

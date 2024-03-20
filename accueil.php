@@ -18,6 +18,9 @@ if (isset($_SESSION['user']) && isset($_SESSION['role']) && isset($_SESSION['mai
 
     if ($role == 'Admin'){ 
         echo "Bienvenue administrateur ". $user;
+
+        
+
     }
     else if($role == 'User'){
         echo "Bienvenue utilisateur ". $user;
