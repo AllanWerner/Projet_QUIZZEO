@@ -24,7 +24,7 @@ if (isset($_SESSION['user']) && isset($_SESSION['role']) && isset($_SESSION['mai
     }
     else if($role == 'Ecole' || $role == 'Entreprise' ){
         echo "Bienvenue  ". $user ;
-        echo "<button><a class= 'quizBtn' href='Boite_quiz.php'>New quiz</a></button>";  // A mettre dans le header 
+         
     }
     
 

@@ -95,6 +95,7 @@ if(isset($_SESSION['role']) && $_SESSION['role'] == 'Admin'  ){
 }
 
 echo "<a class= 'dashBtn' href='#'>Mes quiz</a>"; 
+echo "<button><a class= 'quizBtn' href='Boite_quiz.php'>New quiz</a></button>";
 ?>
     </nav>
 </body>
