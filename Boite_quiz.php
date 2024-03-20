@@ -4,49 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Boîte de dialogue</title>
-<style>
-    
-.boite_d {
-  display: none; /* Cache la boîte de dialogue par défaut */
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.4); 
-}
-
-/* Style du contenu de la boîte de dialogue */
-.content {
-  background-color: #fefefe;
-  margin: 15% auto; 
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* Style pour le bouton de fermeture */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-</style>
+<link rel="stylesheet" href="boitedialogue.css">
 </head>
 <body>
 
-<button id="open-boite_d">Créer un nouveau quiz </button>
+<div class= "boite-center">
+  <button id="open-boite_d">Créer un nouveau quiz </button>
+</div>
 
 <div id="boite_d" class="boite_d">
   <div class="content">
