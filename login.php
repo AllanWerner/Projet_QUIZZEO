@@ -79,7 +79,7 @@
         </form>
  
         <!------------------- Formulaire d'inscription -------------------------->
-        <form method="post" action="traitement.php?root=inscription" class="register-container" id="register">
+        <form method="post" action="traitement.php?root=inscription" class="register-container" id="register" onsubmit="return validateCaptcha();">
             <div class="top">
                 <span>Have an account? <a href="#" onclick="login()">Login</a></span>
                 <header>Sign Up</header>
@@ -108,6 +108,16 @@
                 </select>
             </div>
             <div class="g-recaptcha" data-sitekey="6LfOg5gpAAAAAOuyBgzvJw4SxxEtwqOK0jhF0DJ5"></div>
+            <div id =  "captchaError"></div>
+            <script>
+                function  validateCaptcha() {
+                    var response = grecaptcha.getResponse();
+                    while(response.length == 0) {
+                        document.getElementById("captchaError") .innerHTML ="Veillez compléter le captcha.";
+                        return false;
+                    }
+                }
+            </script>
             <!-- End of dropdown menu -->
             <div class="input-box">
                 <input type="submit" class="submit" value="Register">

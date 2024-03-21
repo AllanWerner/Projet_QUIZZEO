@@ -59,6 +59,21 @@ if (isset($_GET['root']) && $_GET['root'] == 'login') {
 }
 
 
+// Captcha Authentification
+if(!empty($_POST['g-recaptcha-response']) || isset($_POST['g-recaptcha-response'])) {
+    $secret="6LfOg5gpAAAAAOuyBgzvJw4SxxEtwqOK0jhF0DJ5";
+   
+    $data=json_decode($response);
+    if($data->success){
+        echo"<h2>Données envoyés !";
+    }
+    else{
+        echo"<h2>Essayez encore !";
+    }
+}
+
+
+
 #  A propos de l'inscription
 
 if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
@@ -91,7 +106,6 @@ if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
 
     if ($found) {
         header("Location: login.php?erreur=2");
-        exit(); 
     }else{
         fputcsv($registre,  [strval($ind + 1),$_POST['name'],$_POST['mail'],password_hash($_POST['password'], PASSWORD_DEFAULT)]);
     }
