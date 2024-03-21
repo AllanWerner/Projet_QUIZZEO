@@ -1,5 +1,22 @@
 <?php
 
+// Fonction pour vérifier si un utilisateur est banni
+function isUserBanned($email, $role, $ban_file) {
+    $user_found = false;
+
+    if (($handle = fopen($ban_file, 'r')) !== false) {
+        while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+            if ($data[0] == $email && ($data[1] == $role)) { // Utilisation de password_verify() 
+                $user_found = true;
+                break;
+            }
+        }
+        fclose($handle);
+    }
+
+    return  $user_found;
+}
+
 if (isset($_POST['account-type'])){
     $type = $_POST['account-type'];
 }else{
@@ -30,7 +47,15 @@ if (isset($_GET['root']) && $_GET['root'] == 'login') {
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Utilisation de password_hash() pour crypter le mot de passe
 
         $user_found = false;
-        
+        $con_file = fopen("connexion.csv", "a");
+        $ban_file = 'ban.csv';
+        $ban = array_map('str_getcsv', file($ban_file));
+
+        if(isUserBanned($email,$type, $ban_file)){
+            fclose($con_file);
+            header('Location: login.php?erreur=5');
+        }
+
         # Parcourir le fichier correspondant pour trouver  l'utilisateur
         if (($handle = fopen($file, 'r')) !== false) {
             while (($data = fgetcsv($handle, 1000, ',')) !== false) {
@@ -49,6 +74,8 @@ if (isset($_GET['root']) && $_GET['root'] == 'login') {
             $_SESSION['user'] = $user;
             $_SESSION['role'] = $type;
             $_SESSION['mail'] = $_POST['mail'];
+            fputcsv($con_file, [$_POST['mail'],$type]);
+            fclose($con_file);
             header('Location: accueil.php');
             exit();
         } else {

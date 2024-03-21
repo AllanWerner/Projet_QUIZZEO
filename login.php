@@ -74,6 +74,12 @@
                     } elseif ($err ==  3) {
                         echo "Echec de récupération des informations de connexion ";
                     }
+                    elseif ($err == 4 ) {
+                        echo "Vous n'êtes pas autorisé à vous connecter en tant  que Administrateur";
+                    }
+                    elseif ($err == 5 ) {
+                        echo "votre compte c'est fait BAN. Veuillez écrirt au administrateur.";
+                    }
                 }
                 ?>
         </form>
@@ -143,6 +149,9 @@
                     }
                     elseif ($err == 4 ) {
                         echo "Vous n'êtes pas autorisé à vous connecter en tant  que Administrateur";
+                    }
+                    elseif ($err == 5 ) {
+                        echo "votre compte c'est fait BAN. Veuillez écrirt au administrateur.";
                     }
                 }
                 ?>
