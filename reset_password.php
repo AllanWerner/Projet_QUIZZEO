@@ -14,7 +14,8 @@
                 <label for="email">Adresse e-mail :</label>
                 <input type="email" id="email" name="mail" required>
             </div>
-            <div class="input-box">
+            <div class="input-group">
+                <label for="account-type">Type de compte :</label>
                 <select class="input-field" id="account-type" name="account-type">
                     <option value="Ecole">Ecole</option>
                     <option value="Entreprise">Entreprise</option>
