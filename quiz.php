@@ -50,13 +50,15 @@ if(isset($_POST[ 'nbq'])  && isset($_POST['np'])) {
         
 
         echo "<input type ='text' name = 'name_qcm'  placeholder= 'Intitulé du qcm '>";
-        echo "<br><br>";
+        echo "<br></br>";
+        echo "<input type ='number' name = 'duree'  placeholder= 'Durée du qcm en minutes '>"."<br>";
     
         
         // A chaque itération une div sera créée avec des zones de texte respectivement pour la question et  les propsitions
         for ($i = 1; $i <= $nbq; $i++)  {
             echo "<div>";
             echo "<input type ='text' name = 'q".$i."'  placeholder='Entrer la question " . $i . "'>" ."<br>";
+          
             echo "<ul>";
             for ($j = 1; $j <= $np; $j++) {
                 echo "<li><input type ='text' name = 'pq".$i."_".$j."' placeholder='Proposition " . $j . "'></li>" . '<br>';

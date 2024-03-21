@@ -87,15 +87,12 @@
         <a class= 'log-button' href='./logout.php'>logout</a>
         <?php
 session_start();
-if(isset($_SESSION['role']) && $_SESSION['role'] == 'Admin'  ){    
-    echo "<a class= 'dashBtn' href='#'>Quiz_Dashboard</a>";
-    echo "<a class= 'dashBtn' href='#'>User_Dashboard</a>";   
+if(isset($_SESSION['role']) && $_SESSION['role'] == 'Ecole' || $_SESSION['role'] == 'Entreprise' ){    
+    echo "<button><a class= 'quizBtn' href='Boite_quiz.php'>New quiz</a></button>";
 } elseif (isset($_SESSION['role']) && $_SESSION['role'] == 'User'){
-    echo "<a class= 'dashBtn' href='#'>Home</a>";
+    echo "<a class= 'dashBtn' href='#'>Mon Profil</a>";
 }
 
-echo "<a class= 'dashBtn' href='#'>Mes quiz</a>"; 
-echo "<button><a class= 'quizBtn' href='Boite_quiz.php'>New quiz</a></button>";
 ?>
     </nav>
 </body>

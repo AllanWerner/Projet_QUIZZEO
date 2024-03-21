@@ -22,7 +22,7 @@ if (isset($_POST['Create_quiz'])) {
         $contenu = array();
         $quiz = array();
         $time = $_POST['duree'];
-        $info_quiz = [$nom, $role, $mail, $lien,$nbq,$np,$time,"En cours", "Activé"];
+        $info_quiz = [$nom,$role,$mail,$lien,$nbq,$np,$time,"En cours","Activé"];
 
         if ($role  == "Ecole"){
             

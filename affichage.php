@@ -22,27 +22,26 @@ function Pourcent($prop,$ind_ques,$file){
             if ($prop == $data[$ind_ques]){
             $count++;
             }
-
         }
     
         fclose($fichier);
     }
     
     $result = ($count/$taille) * 100;
-    return $result  ;
+    return [$result,$prop] ;
 }
 
 
 
-    if ((isset($_GET['name'])) && (isset($_GET['type'])) ){
-        $nom = $_GET['name'];
-        $type = $_GET['type'];
+    if ((isset($_POST['name'])) && (isset($_POST['type'])) ){
+        $nom = $_POST['name'];
+        $type = $_POST['type'];
 
         $file = "Player_".$nom.".csv";
 
         echo "<table>";
 
-        if ($type = 'Ecole'){
+        if ($type == 'Ecole'){
            
            echo "<tr>";
                 echo "<th>Nom</th>";
@@ -60,7 +59,7 @@ function Pourcent($prop,$ind_ques,$file){
             }
         }
 
-        elseif ($type = 'Entreprise'){
+        elseif ($type == 'Entreprise'){
 
             $fichier_quiz = fopen('quiz.csv', 'r');
 
@@ -69,7 +68,7 @@ function Pourcent($prop,$ind_ques,$file){
                 while (($data = fgetcsv($fichier_quiz, 1000, ",")) !== FALSE ) {
                    
                     $test_info = str_getcsv($data[0]); //  Transforme ma chaîne de caractères en tableau afin  d'y accéder plus facilement
-                    if ($test_info[0] == $nom) {
+                    if (($test_info[0] == $nom) && ($test_info[1] == $type)) {
                         $quiz_found = true;   
                         $quiz = $data;     //Récupère la ligne csv correspondant au quiz 
                         break;
@@ -109,14 +108,12 @@ function Pourcent($prop,$ind_ques,$file){
                 echo "<tr>";
                 echo "<td>".$question[0]."</td>";
                 for ($k = 1; $k <= $np; $k++) {
-                    echo "<td>".Pourcent($question[$k],$i,$file)."</td>";
+                    echo "<td>".implode(", ",Pourcent($question[$k],$i + 1,$file))."</td>";
                 }
      
             }
         } 
         echo "</table>";   
     }
-
- 
 
 ?>

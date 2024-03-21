@@ -100,13 +100,13 @@ if(!empty($_POST['g-recaptcha-response']) || isset($_POST['g-recaptcha-response'
 }
 
 
-
 #  A propos de l'inscription
 
 if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
  
     $registre = fopen($file, 'a+');
     $ind = 0;
+
     if(filesize($file) !== 0){
         if ($file == 'admin.csv'){
             header('location: login.php?erreur=4');  // Pour éviter d'avoir plusieurs  admins  dans la base de fichiers
@@ -144,9 +144,13 @@ if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
     $_SESSION['role'] = $type;
     $_SESSION['mail'] = $_POST['mail'];
 
+    $con_file = fopen("connexion.csv", "a");
+    fputcsv($con_file, [$_POST['mail'],$type]);
+    fclose($con_file);
+
     if ($type == "User") {
 
-        $nomFichier = "Quiz_".$_SESSION['mail'].".csv";
+        $nomFichier = "MesQuiz_".$_SESSION['mail'].".csv";
 
     if (!file_exists($nomFichier)) {
         touch($nomFichier);
