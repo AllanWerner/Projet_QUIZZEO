@@ -36,7 +36,7 @@
                 <header>Login</header>
             </div>
             <div class="input-box">
-                <input type="text" class="input-field" name = "mail" placeholder="Email" required>
+                <input type="email" class="input-field" name = "mail" placeholder="Email" required>
                 <i class="bx bx-user"></i>
             </div>
             <div class="input-box">
@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="input-box">
-                <input type="text" class="input-field"  name = "mail" placeholder="Email" required>
+                <input type="email" class="input-field"  name = "mail" placeholder="Email" required>
                 <i class="bx bx-envelope"></i>
             </div>
             <div class="input-box">
@@ -110,7 +110,6 @@
                     <option value="Ecole">Ecole</option>
                     <option value="Entreprise">Entreprise</option>
                     <option value="User">Utilisateur</option>
-                    <option value="Admin">Administrateur</option>
                 </select>
             </div>
             <div class="g-recaptcha" data-sitekey="6LfOg5gpAAAAAOuyBgzvJw4SxxEtwqOK0jhF0DJ5"></div>

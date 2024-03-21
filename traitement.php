@@ -108,9 +108,7 @@ if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
     $ind = 0;
 
     if(filesize($file) !== 0){
-        if ($file == 'admin.csv'){
-            header('location: login.php?erreur=4');  // Pour éviter d'avoir plusieurs  admins  dans la base de fichiers
-        }
+        
         while($line = fgetcsv($registre) !== FALSE) {
             $ind++;      // pour récupérer l'indice du dernier  élément inséré dans le fichier
         }
