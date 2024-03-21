@@ -66,6 +66,9 @@ if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
     $registre = fopen($file, 'a+');
     $ind = 0;
     if(filesize($file) !== 0){
+        if ($file == 'admin.csv'){
+            header('location: login.php?erreur=4');  // Pour éviter d'avoir plusieurs  admins  dans la base de fichiers
+        }
         while($line = fgetcsv($registre) !== FALSE) {
             $ind++;      // pour récupérer l'indice du dernier  élément inséré dans le fichier
         }
@@ -99,6 +102,19 @@ if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
     $_SESSION['user'] = $_POST['name'];
     $_SESSION['role'] = $type;
     $_SESSION['mail'] = $_POST['mail'];
+
+    if ($type == "User") {
+
+        $nomFichier = "Quiz_".$_SESSION['mail'].".csv";
+
+    if (!file_exists($nomFichier)) {
+        touch($nomFichier);
+        echo "Le fichier a été créé avec succès !";
+    } else {
+        echo "Le fichier existe déjà.";
+    }
+
+    }
     fclose($registre);
     header('Location: accueil.php');
  

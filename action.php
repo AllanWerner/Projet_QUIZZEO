@@ -21,10 +21,11 @@ if (isset($_POST['Create_quiz'])) {
         $lien = "http://localhost/PHP/Projet/Quizzeo/start_quiz.php?name=".$nom;
         $contenu = array();
         $quiz = array();
+        $time = $_POST['duree'];
+        $info_quiz = [$nom, $role, $mail, $lien,$nbq,$np,$time,"En cours", "Activé"];
 
         if ($role  == "Ecole"){
-            $time = $_POST['duree'];
-            $info_quiz = [$nom, $role, $mail, $lien,$nbq,$np,$time];
+            
         
             for ($i = 1; $i <= $nbq; $i++) {
                 $info_ques = array();  
@@ -56,8 +57,7 @@ if (isset($_POST['Create_quiz'])) {
         }
 
         elseif( $role=="Entreprise" ){
-            $time = $_POST['duree'];
-            $info_quiz = [$nom, $role, $mail, $lien,$nbq,$np];
+          
         
             for ($i = 1; $i <= $nbq; $i++) {
                 $info_ques = array();  

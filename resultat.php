@@ -41,15 +41,16 @@ if (isset($_GET['name']) && isset($_GET['nbq']) && isset($_GET['role_creator']))
         }
     }
     elseif($role_creator == 'Entreprise'){
-        $reponses_joeur = array();
+        $reponses_joueur = array();
+        array_push($reponses_joueur, $user);
 
         for ($i = 1; $i <= $nbq; $i++ ){
-            array_push($reponses_joeur, $_POST["q".$i.""]);
+            array_push($reponses_joueur, $_POST["q".$i.""]);
         }
 
         //Récupère les réponses des clients 
         $joueur_quiz = fopen("Player_".$name_quiz.".csv", "a+");
-        fputcsv($joueur_quiz,[$user,implode(", ",$reponses_joeur)]);
+        fputcsv($joueur_quiz,$reponses_joueur);
         fclose($joueur_quiz);
 
         echo " Merci ".$user." d'avoir participé à notre quiz ! ";

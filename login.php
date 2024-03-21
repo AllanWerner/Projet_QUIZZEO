@@ -131,6 +131,9 @@
                     } elseif ($err ==  3) {
                         echo "Echec de récupération des informations de connexion ";
                     }
+                    elseif ($err == 4 ) {
+                        echo "Vous n'êtes pas autorisé à vous connecter en tant  que Administrateur";
+                    }
                 }
                 ?>
         </form>
