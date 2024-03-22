@@ -80,6 +80,12 @@
                     elseif ($err == 5 ) {
                         echo "votre compte c'est fait BAN. Veuillez écrirt au administrateur.";
                     }
+                    elseif ($err == 6 ) {
+                        echo "L'adresse email est invalide !";
+                    }
+                    elseif ($err == 7 ) {
+                        echo "Votre mot de passe doit avoir une longueur minimale de 8 caractères et contenir au moins une lettre minuscule, une lettre majuscule, un chiffre, et un caractère spécial parmi @$!%*#?&";
+                    }
                 }
                 ?>
         </form>

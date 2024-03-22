@@ -84,7 +84,7 @@
 <body>
 <nav class="navbar">
         <a href="accueil.php"><img class="img" src="./images/logo.png"></a>  
-        <a class= 'log-button' href='./logout.php'>logout</a>
+        
         <?php
 session_start();
 if(isset($_SESSION['role']) && $_SESSION['role'] == 'Ecole' || $_SESSION['role'] == 'Entreprise' ){    
@@ -94,6 +94,8 @@ if(isset($_SESSION['role']) && $_SESSION['role'] == 'Ecole' || $_SESSION['role']
 }
 
 ?>
+
+<a class= 'log-button' href='./logout.php'>logout</a>
     </nav>
 </body>
 </html>

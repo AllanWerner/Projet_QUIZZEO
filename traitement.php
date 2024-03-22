@@ -104,11 +104,22 @@ if(!empty($_POST['g-recaptcha-response']) || isset($_POST['g-recaptcha-response'
 
 if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
  
+    $emailPattern = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}$/';
+    $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{8,}$/';
+    $emailValid = preg_match($emailPattern, $_POST['mail']);
+    $passwordValid = preg_match($passwordPattern, $_POST['password']);
+
+    if (!$emailValid) {
+        header("Location: login.php?erreur=6");
+    } elseif (!$passwordValid) {
+        header("Location: login.php?erreur=7");
+    }
+
+
     $registre = fopen($file, 'a+');
     $ind = 0;
 
-    if(filesize($file) !== 0){
-        
+    if(filesize($file) !== 0){  
         while($line = fgetcsv($registre) !== FALSE) {
             $ind++;      // pour récupérer l'indice du dernier  élément inséré dans le fichier
         }
@@ -159,7 +170,10 @@ if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
 
     }
     fclose($registre);
-    header('Location: accueil.php');
+    //header('Location: accueil.php');
+
+    echo print_r($emailValid);
+    echo print_r($passwordValid);
  
     exit(); 
 }
