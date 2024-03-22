@@ -7,59 +7,6 @@
     <link rel="stylesheet" href="Entreprise_quiz.css">
 </head>
 <body>
-    <style>
-    body {
-    font-family: Arial, sans-serif;
-    background-color: #efab23;
-    overflow: hidden;
-}
-
-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 2);
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-div.question {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-input[type='radio'] {
-    margin-right: 10px;
-}
-
-.submitBtn {
-    display: block;
-    width: 100%;
-    padding: 10px 0;
-    background-color: #e35f5e;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.submitBtn:hover {
-    background-color: #e23737;
-}
-
-
-    </style>
 
 <?php
 session_start();
@@ -102,11 +49,13 @@ if (isset($_GET['name'])) {
 
         $nbq = $info_quiz[4];
         $np = $info_quiz[5];
+        $duree = $info_quiz[6];
        
 
         echo  "<form action='resultat.php?name=".$name_quiz."&nbq=".$nbq."&role_creator=".$role_creator."' method='post' >";
         
         echo "<h1> Intitulé du quiz : ".$info_quiz[0]."</h1>" ;
+        echo "<div class='minuteur' id='minuteur'></div>";
        
         for ($i = 0; $i < $nbq; $i++) {  // Crée une div à chaque itération pour  afficher le contenu de chaque question
             $question = array();
@@ -130,6 +79,7 @@ if (isset($_GET['name'])) {
         }
 
         echo "<div>";
+        echo "<button id='startTimer' >Commencer</button>";
         echo "<input type = 'submit' class = 'submitBtn' value = 'Terminer'>";
         echo "</div>";
 
@@ -140,6 +90,47 @@ if (isset($_GET['name'])) {
     }
 } 
 ?>
+
+<script>
+       
+        const duree = <?php echo $duree * 60; ?>;    // Imprimer la valeur de la variable duree dans le script 
+        
+        const endTime = Date.now() + duree * 1000;   // Date de fin du minuteur en  millisecondes
+
+        var startButton = document.getElementById('startTimer');
+        var stopButton = document.querySelector('.submitBtn');
+
+        // Fonction du minuteur 
+        function updateMinuteur() {
+            const currentTime = Date.now();
+            const remainingTime = Math.max(0, endTime - currentTime);
+
+            const minutes = Math.floor(remainingTime / 60000);
+            const seconds = Math.floor((remainingTime % 60000) / 1000); 
+            document.getElementById("minuteur").innerHTML = `Temps restant : ${minutes} minutes ${seconds} secondes`;
+
+            if (seconds === 0 && minutes === 0) { 
+                document.getElementById("minuteur").innerHTML = "Temps écoulé !";
+                clearInterval(interval);  // Arrête le minuteur lorsque le temps est écoulé
+                window.location.href = this.action;     // Redirige vers la page resultat.php après le temps imparti
+            }
+        }
+
+        function startTimer() {
+            const interval = setInterval(updateMinuteur, 1000);  // Affiche le résultat du minuteur toutes les secondes 
+        }
+
+        // Lance la fonction lorsque l'on clique sur le bouton  
+        startButton.addEventListener('click', function() {
+            startTimer();
+            startButton.disabled = true;  // Désactiver le bouton une fois que le minuteur est démarré
+            stopButton.style.display = 'block';  // Active le bouton de fin 
+        });
+
+        stopButton.addEventListener('click', function() {
+            window.location.href = this.action;   // Redirige vers la page resultat.php
+        });
+    </script>
 
 </body>
 </html>
