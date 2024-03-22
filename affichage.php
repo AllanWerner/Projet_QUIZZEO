@@ -39,11 +39,15 @@ function Pourcent($prop,$ind_ques,$file){
 
         $file = "Player_".$nom.".csv";
 
+
         echo "<table>";
 
         if ($type == 'Ecole'){
-           
-           echo "<tr>";
+
+            if(filesize($file) === 0){
+                echo "Aucune réponse pour ce test.";
+            }else{
+                echo "<tr>";
                 echo "<th>Nom</th>";
                 echo "<th>note</th>";
             echo "</tr>";
@@ -56,6 +60,7 @@ function Pourcent($prop,$ind_ques,$file){
                     echo "</tr>";
                 }
                 fclose($fichier);
+            } 
             }
         }
 
