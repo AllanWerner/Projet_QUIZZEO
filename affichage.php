@@ -1,5 +1,5 @@
 <?php
-
+ include 'header.php';
 // Les fonctions ind_debut et ind_fin vont nous aider à parcourir le fichier csv 
 
 function ind_debut($nb, $t) {
