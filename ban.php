@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $ban = array_map('str_getcsv', file($ban_file));
         $is_banned = FALSE;
         foreach ($ban as $banish) {
-            if ($banish[0] == $mail) { // Utiliser $value au lieu de $key pour l'email de l'utilisateur
+            if ($banish[0] == $mail) { // Utiliser $mail  pour l'email de l'utilisateur
                 $is_banned = TRUE;
                 break;
             }
@@ -25,18 +25,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $new_contents = [];
             foreach ($ban_file_contents as $line) {
                 $line_data = str_getcsv($line);
-                if ($line_data[0] != $mail) { // Utiliser $value au lieu de $key pour l'email de l'utilisateur
+                if ($line_data[0] != $mail) { // Utiliser $mail  pour l'email de l'utilisateur
                     $new_contents[] = $line;
                 }
             }
             file_put_contents($ban_file, implode("", $new_contents));
-            echo "L'utilisateur $mail a été débanni."; // Utiliser $value au lieu de $key pour l'email de l'utilisateur
+            echo "L'utilisateur $mail a été débanni."; // Utiliser $mail  pour l'email de l'utilisateur
         } else {
             // Sinon, le bannir
             // Ajouter l'utilisateur au fichier de bannissement
-            $ban_entry = "$mail,$role\n"; // Utiliser $value au lieu de $key pour l'email de l'utilisateur
+            $ban_entry = "$mail,$role\n"; // Utiliser $mail  pour l'email de l'utilisateur
             file_put_contents($ban_file, $ban_entry, FILE_APPEND); // Ajouter l'entrée au fichier
-            echo "L'utilisateur $mail a été banni."; // Utiliser $value au lieu de $key pour l'email de l'utilisateur
+            echo "L'utilisateur $mail a été banni."; // Utiliser $mail  pour l'email de l'utilisateur
         }
 
     header('Location: accueil.php'); // Rediriger l'utilisateur après le traitement

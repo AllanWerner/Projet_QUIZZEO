@@ -10,7 +10,7 @@ function ind_fin($nb, $t) {
     return $t + $nb*($t + 1);
 }
 
-
+// Cette fonction  va permettre de déterminer le pourcentage des occurences pour les quiz de satisfaction
 function Pourcent($prop,$ind_ques,$file){
 
     $count = 0;
@@ -31,7 +31,7 @@ function Pourcent($prop,$ind_ques,$file){
     return [$result,$prop] ;
 }
 
-
+// Traitement des résultats du quiz  
 
     if ((isset($_POST['name'])) && (isset($_POST['type'])) ){
         $nom = $_POST['name'];

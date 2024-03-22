@@ -22,7 +22,7 @@ if (isset($_POST['Create_quiz'])) {
         $contenu = array();
         $quiz = array();
         $time = $_POST['duree'];
-        $info_quiz = [$nom,$role,$mail,$lien,$nbq,$np,$time,"En cours"];
+        $info_quiz = [$nom,$role,$mail,$lien,$nbq,$np,$time,"En cours"]; 
 
         if ($role  == "Ecole"){
             
@@ -99,6 +99,4 @@ if (isset($_POST['Create_quiz'])) {
     header('location: accueil.php');   // Redirige vers la page d'accueil une fois le  quizz créé
 
 }
-
-
 ?>
