@@ -109,73 +109,72 @@ if (isset($_GET['root']) && $_GET['root'] == 'inscription') {
     $emailValid = preg_match($emailPattern, $_POST['mail']);
     $passwordValid = preg_match($passwordPattern, $_POST['password']);
 
-    if (!$emailValid) {
-        header("Location: login.php?erreur=6");
-    } elseif (!$passwordValid) {
-        header("Location: login.php?erreur=7");
-    }
-
-
-    $registre = fopen($file, 'a+');
-    $ind = 0;
-
-    if(filesize($file) !== 0){  
-        while($line = fgetcsv($registre) !== FALSE) {
-            $ind++;      // pour récupérer l'indice du dernier  élément inséré dans le fichier
+    if ((!$emailValid) || (!$passwordValid)) {
+        if(!$emailValid){
+            header("Location: login.php?erreur=6");
+            exit();
+        }elseif(!$passwordValid){
+            header("Location: login.php?erreur=7");
+            exit();
         }
-    }
+        
+    }else {
+        $registre = fopen($file, 'a+');
+        $ind = 0;
 
-   
-    $user = [strval($ind + 1),$_POST['name'],$_POST['mail'],password_hash($_POST['password'], PASSWORD_DEFAULT)];
-
-    $found = false; // Variable pour indiquer si l'utilisateur est déjà enregistré
-
-    if (($handle = fopen($file, 'r')) !== false) {
-        while (($data = fgetcsv($handle, 1000, ',')) !== false) {
-            if ($data[2] == $user[2]) {  // Vérifie si l'utilisateur est déjà enregistré
-                $found = true;
-                break; 
+        if(filesize($file) !== 0){  
+            while($line = fgetcsv($registre) !== FALSE) {
+                $ind++;      // pour récupérer l'indice du dernier  élément inséré dans le fichier
             }
         }
-        fclose($handle);
-    }
 
-    if ($found) {
-        header("Location: login.php?erreur=2");
-    }else{
-        fputcsv($registre,  [strval($ind + 1),$_POST['name'],$_POST['mail'],password_hash($_POST['password'], PASSWORD_DEFAULT)]);
-    }
+    
+        $user = [strval($ind + 1),$_POST['name'],$_POST['mail'],password_hash($_POST['password'], PASSWORD_DEFAULT)];
+
+        $found = false; // Variable pour indiquer si l'utilisateur est déjà enregistré
+
+        if (($handle = fopen($file, 'r')) !== false) {
+            while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+                if ($data[2] == $user[2]) {  // Vérifie si l'utilisateur est déjà enregistré
+                    $found = true;
+                    break; 
+                }
+            }
+            fclose($handle);
+        }
+
+        if ($found) {
+            header("Location: login.php?erreur=2");
+        }else{
+            fputcsv($registre,  [strval($ind + 1),$_POST['name'],$_POST['mail'],password_hash($_POST['password'], PASSWORD_DEFAULT)]);
+        }
 
 
- 
-    session_start();
-    $_SESSION['user'] = $_POST['name'];
-    $_SESSION['role'] = $type;
-    $_SESSION['mail'] = $_POST['mail'];
+        session_start();
+        $_SESSION['user'] = $_POST['name'];
+        $_SESSION['role'] = $type;
+        $_SESSION['mail'] = $_POST['mail'];
 
-    $con_file = fopen("connexion.csv", "a");
-    fputcsv($con_file, [$_POST['mail'],$type]);
-    fclose($con_file);
+        $con_file = fopen("connexion.csv", "a");
+        fputcsv($con_file, [$_POST['mail'],$type]);
+        fclose($con_file);
 
-    if ($type == "User") {
+        if ($type == "User") {
 
-        $nomFichier = "MesQuiz_".$_SESSION['mail'].".csv";
+            $nomFichier = "MesQuiz_".$_SESSION['mail'].".csv";
 
-    if (!file_exists($nomFichier)) {
-        touch($nomFichier);
-        echo "Le fichier a été créé avec succès !";
-    } else {
-        echo "Le fichier existe déjà.";
-    }
+        if (!file_exists($nomFichier)) {
+            touch($nomFichier);
+            echo "Le fichier a été créé avec succès !";
+        } else {
+            echo "Le fichier existe déjà.";
+        }
 
-    }
-    fclose($registre);
-    //header('Location: accueil.php');
-
-    echo print_r($emailValid);
-    echo print_r($passwordValid);
- 
-    exit(); 
+        }
+        fclose($registre);
+        header('Location: accueil.php');
+        exit(); 
+    }   
 }
 else {
     print_r("error");
