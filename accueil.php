@@ -1,13 +1,13 @@
+<?php include 'header.php';?>
 <?php
-
-include 'header.php';
-
-//Déclaration des fonctions d'affichage des dashboard 
-
-//Fonction pour le dashboard des quiz pour l'administrateur
+ 
+//Déclaration des fonctions d'affichage des dashboard
+ 
 function Quiz_Dashboard($file){
     echo "<h2>Les QUIZ</h2>";
-
+   
+   
+ 
     echo "<table>";
     echo "<thead>";
        echo "<tr>";
@@ -16,12 +16,12 @@ function Quiz_Dashboard($file){
             echo "<th>Créateur</th>";
             echo "<th>Statut</th>";
             echo "<th>Action</th>";
-
+ 
         echo "</tr>";
     echo "</thead>";
     echo "<tbody";
         $ban_file = 'ban_quiz.csv';
-        
+       
         if (($fichier = fopen($file, 'r')) !== FALSE) {
             while (($data = fgetcsv($fichier, 1000, ",")) !== FALSE ) {
                 $info_quiz = str_getcsv($data[0]);
@@ -29,10 +29,12 @@ function Quiz_Dashboard($file){
                 echo "<td>" . htmlspecialchars($info_quiz[0]) . "</td>"; // Nom du quiz
                 echo "<td>" . htmlspecialchars($info_quiz[1]) . "</td>"; // Type de compte du créateur
                 echo "<td>" . htmlspecialchars($info_quiz[2]) . "</td>"; // Email du créateur
-                echo "<td>" . htmlspecialchars($info_quiz[7]) . "</td>"; // Statut du quiz 
-
+                echo "<td>" . htmlspecialchars($info_quiz[7]) . "</td>"; // Statut du quiz
+ 
+ 
                 // bouton pour changer l'état d'un quiz
                 echo "<td>";
+               
                 echo "<form method='post' action='ban_quiz.php?name=" . urlencode(htmlspecialchars($info_quiz[0])) . "&mail=".htmlspecialchars($info_quiz[2])."' >";
                 $banned = FALSE;
                 if (($handle = fopen($ban_file, 'r')) !== false) {
@@ -44,24 +46,24 @@ function Quiz_Dashboard($file){
                     }
                     fclose($handle);
                 }
-
+ 
                 echo "<input type='submit' name='action' value='" . ($banned ? "Activer" : "Désactiver") . "'>";
                 echo "</form>";
                 echo "</td>";
-
+ 
                 echo "</tr>";
             }
             fclose($fichier); // Fermeture du fichier
         }
     echo "</tbody>";
     echo "</table>";
-
+ 
 }
-
-//Fonction pour le dashboard des utilisateurs pour l'administrateur
+ 
+ 
 function User_dashboard($file, $role){
     echo "<h2>Comptes " . htmlspecialchars($role) . "</h2>";
-    
+   
         echo "<table>";
         echo "<thead>";
            echo "<tr>";
@@ -71,11 +73,11 @@ function User_dashboard($file, $role){
                 echo "<th>Statut</th>";
             echo "</tr>";
         echo "</thead>";
-        
+       
         echo "<tbody>";
             $ban_file = 'ban.csv';
             $login_file = 'connexion.csv';
-            
+           
             // Vérification de l'existence du fichier d'utilisateurs
             if (($fichier = fopen($file, 'r')) !== FALSE) {
                 while (($data = fgetcsv($fichier, 1000, ",")) !== FALSE ) {
@@ -93,11 +95,11 @@ function User_dashboard($file, $role){
                         }
                         fclose($handle);
                     }
-
+ 
                     echo ($connected ? "Connecté" : "Déconnecté");
                     echo "</td>";
                     // bouton pour bannir l'utilisateur
-
+ 
                     echo "<form method='post' action='ban.php?role=" . urlencode($role) . "&mail=".htmlspecialchars($data[2])."' >";
                     echo "<td>";
                     $banned = FALSE;
@@ -110,86 +112,84 @@ function User_dashboard($file, $role){
                         }
                         fclose($handle);
                     }
-
+ 
                     echo "<input type='submit' name='statut' value='" . ($banned ? "Banni" : "Actif") . "'>";
                     echo "</td>";
                     echo "</form>";
-                    
+                   
                     echo "</tr>";
                 }
                 fclose($fichier); // Fermeture du fichier
             }
         echo "</tbody>";    
         echo "</table>";
-
+ 
 }
-
-//Fonction pour le dashboard des quiz pour soit le type Ecole soit le type Entreprise
+ 
 function Role_dashboard($file, $role, $mail){
     echo "<h2>Mes QUIZ</h2>";
-    
+   
     echo "<table>";
     echo "<thead>";
-    echo "<tr>";
-    echo "<th>Nom</th>";
-    echo "<th>Lien</th>";
-    echo "<th>Nombre de questions</th>";
-    echo "<th>Durée</th>";
-    echo "<th>Résultats</th>";
-    echo "</tr>";
+       echo "<tr>";
+            echo "<th>Nom</th>";
+            echo "<th>Lien</th>";
+            echo "<th>Nombre de questions</th>";
+            echo "<th>Durée</th>";
+            echo "<th>Résultats</th>";
+        echo "</tr>";
     echo "</thead>";
-
+ 
     echo "<tbody>";  
-
-    if (($fichier = fopen($file, 'r')) !== FALSE) {
-        while (($data = fgetcsv($fichier, 1000, ",")) !== FALSE ) {
-            $info_quiz = str_getcsv($data[0]);
-            // Vérifiez que le rôle et l'email correspondent avant d'afficher les informations du quiz
-            if(($role == $info_quiz[1]) && ($mail == $info_quiz[2])){
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($info_quiz[0]) . "</td>"; // Nom du quiz
-                echo "<td><a href='" . htmlspecialchars($info_quiz[3]) . "'>" . htmlspecialchars($info_quiz[3]) . "</a></td>"; // Lien
-                echo "<td>" . htmlspecialchars($info_quiz[4]) . "</td>"; // Nombre de questions
-                echo "<td>" . htmlspecialchars($info_quiz[6]) . "</td>"; // Durée du quiz 
-                echo "<td>";
-                echo "<form method='post' action='affichage.php'>";
-                echo "<input type='hidden' name='name' value='" . htmlspecialchars($info_quiz[0]) . "'>";
-                echo "<input type='hidden' name='type' value='" . htmlspecialchars($info_quiz[1]) . "'>";
-                echo "<input type='submit' value='Voir'>";
-                echo "</form>";
-                echo "</td>";
-                echo "</tr>";
+ 
+        if (($fichier = fopen($file, 'r')) !== FALSE) {
+            while (($data = fgetcsv($fichier, 1000, ",")) !== FALSE ) {
+                $info_quiz = str_getcsv($data[0]);
+                // Vérifiez que le rôle et l'email correspondent avant d'afficher les informations du quiz
+                if(($role == $info_quiz[1]) && ($mail == $info_quiz[2])){
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($info_quiz[0]) . "</td>"; // Nom du quiz
+                    echo "<td><a href='" . htmlspecialchars($info_quiz[3]) . "'>" . htmlspecialchars($info_quiz[3]) . "</a></td>"; // Lien
+                    echo "<td>" . htmlspecialchars($info_quiz[4]) . "</td>"; // Nombre de questions
+                    echo "<td>" . htmlspecialchars($info_quiz[6]) . "</td>"; // Durée du quiz
+                    echo "<td>";
+                    echo "<form method='post' action='affichage.php'>";
+                    echo "<input type='hidden' name='name' value='" . htmlspecialchars($info_quiz[0]) . "'>";
+                    echo "<input type='hidden' name='type' value='" . htmlspecialchars($info_quiz[1]) . "'>";
+                    echo "<input type='submit' value='Voir'>";
+                    echo "</form>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
             }
+            fclose($fichier); // Fermeture du fichier
         }
-        fclose($fichier); // Fermeture du fichier
-    }
     echo "</tbody>";  
     echo "</table>";
 }
-
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="accueil.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="accueil.css">
     <title>Accueil</title>
 </head>
 <body>
+<video autoplay muted loop id="background-video"> <source src="./images/quizzbackground.mp4" type="video/mp4"> </video>
 <?php
-
+ 
 if (isset($_SESSION['user']) && isset($_SESSION['role']) && isset($_SESSION['mail']) ) {  
     $user = $_SESSION['user'] ;
     $role = $_SESSION['role'] ;
     $mail = $_SESSION['mail'] ;
-
+ 
     $quiz_file = 'quiz.csv';
-
-    if ($role == 'Admin'){ 
-        echo "Bienvenue administrateur ". $user;
+ 
+    if ($role == 'Admin'){
+        echo "<h1>Bienvenue $user</h1>";
         echo "<h1>Tableau de bord de l'administration</h1>";
         echo "<br>";
         User_dashboard('Ecole.csv','Ecole');
@@ -201,14 +201,14 @@ if (isset($_SESSION['user']) && isset($_SESSION['role']) && isset($_SESSION['mai
         Quiz_Dashboard($quiz_file);
     }
     else if($role == 'Ecole' || $role == 'Entreprise' ){
-        echo "Bienvenue  ". $user ;
-        Role_dashboard($quiz_file,$role, $mail);     
+        echo "<h1>Bienvenue $user</h1>";
+        Role_dashboard($quiz_file,$role, $mail);    
     }
     else if($role == 'User'){
-        echo "Bienvenue utilisateur ". $user;
-
-        echo "<h2>Mes QUIZ</h2>";
-    
+        echo "<h1>Bienvenue $user</h1>";
+ 
+        echo "<h2>Vos QUIZ</h2>";
+   
         echo "<table>";
         echo "<thead>";
            echo "<tr>";
@@ -216,28 +216,29 @@ if (isset($_SESSION['user']) && isset($_SESSION['role']) && isset($_SESSION['mai
                 echo "<th>Type</th>";
             echo  "</tr>";
         echo "</thead>";
-
-        echo "<tbody>"; 
-        
+ 
+        echo "<tbody>";
+       
         $file = fopen('MesQuiz_'.$mail.'.csv', "r");
         if($file !== false){
             while (($data = fgetcsv($file, 1000, ",")) !== FALSE ) {
                 echo "<tr>";
-                        echo "<td>" . htmlspecialchars($data[0]) . "</td>"; 
-                        echo "<td>" . htmlspecialchars($data[1]) . "</td>"; 
+                        echo "<td>" . htmlspecialchars($data[0]) . "</td>";
+                        echo "<td>" . htmlspecialchars($data[1]) . "</td>";
                 echo   "</tr>";
             }
             fclose($file);
         }
-
-        echo "</tbody>"; 
+ 
+        echo "</tbody>";
         echo "</table><BR>";
-
+ 
         if (($fichier = fopen($quiz_file , "r")) !== FALSE) {
+            echo "<div class='cards-container'>";
             while (($data = fgetcsv($fichier, 1000, ",")) !== FALSE ) {
                 $info_quiz = str_getcsv($data[0]);
                 // Vérifiez que le rôle et l'email correspondent avant d'afficher les informations du quiz
-                echo "<card> <div class= 'container'>";
+                echo " <div class='cards'>";
                 if($info_quiz[1] == 'Ecole' ) {
                     echo "<form  action='start_quiz.php?name=".$info_quiz[0]."' method='post'>";
                 } elseif($info_quiz[1] == 'Entreprise'){
@@ -247,17 +248,18 @@ if (isset($_SESSION['user']) && isset($_SESSION['role']) && isset($_SESSION['mai
                     echo "<p>Proposé par : ".$info_quiz[2]. " </p><br/>";
                     echo "<input type= 'submit' value = 'Voir quiz'>";
                     echo "</form>";
-                    echo "</card>";
+                    echo "</div>";
             }
+            echo "</div>";
         }
     }
-    
+   
 } else{
-    header("Location: login.php?erreur=3"); 
+    header("Location: login.php?erreur=3");
     exit();
 }
     ?>
-
-
+ 
+ 
 </body>
 </html>
