@@ -95,7 +95,7 @@ if(isset($_SESSION['role']) && $_SESSION['role'] == 'Ecole' || $_SESSION['role']
 
 ?>
 
-<a class= 'log-button' href='./logout.php'>logout</a>
+<a class= 'log-button' href='./Logout.php'>logout</a>
     </nav>
 </body>
 </html>
