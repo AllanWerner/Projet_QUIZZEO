@@ -1,2 +1,5 @@
 "machine,Ecole,ste@gmail.com,http://localhost/PHP/Projet/Quizzeo/start_quiz.php?name=machine,4,2,2,En cours,Activé","DELL, oui, non, oui, 2, toshiba, oui, non, non, 2, ASUS, oui, non, oui, 3, IVO, oui, non, non, 3"
 "Sondage,Entreprise,wer@gmail.com,http://localhost/PHP/Projet/Quizzeo/start_quiz.php?name=Sondage,3,2,3,En cours,Activé","Etes vous satisfait ?, oui, non, Etes vous en ile de France ?, oui, non, Aimez vous nos services ?, oui, non"
+", Ecole, salut@gmail.com, http://localhost/PHP/Projet/Quizzeo/start_quiz.php?name=, 2, 2, , En cours, Activé",", , , , , , , , , "
+"Test2, Ecole, salut@gmail.com, http://localhost/PHP/Projet/Quizzeo/start_quiz.php?name=Test2, 2, 2, 3, En cours, Activé","La vache est t'elle bleu , oui, non, oui, 5, la vache est t'elle rouge, oui, non, oui, 10"
+"Salut ça va , Entreprise, entreprise@gmail.com, http://localhost/PHP/Projet/Quizzeo/start_quiz.php?name=Salut ça va , 2, 2, 5, En cours, Activé","La vache est t'elle bleu , Oui, Non, la vache est t'elle rouge, oui, non"
