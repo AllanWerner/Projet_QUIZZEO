@@ -6,15 +6,20 @@
 function Quiz_Dashboard($file){
     echo "<h2>Les QUIZ</h2>";
     
+   
+
     echo "<table>";
+    echo "<thead>";
        echo "<tr>";
             echo "<th>Nom</th>";
             echo "<th>Compte</th>";
             echo "<th>Créateur</th>";
             echo "<th>Statut</th>";
-            echo "<th>Etat</th>";
+            echo "<th>Action</th>";
+
         echo "</tr>";
-        
+    echo "</thead>";
+    echo "<tbody";
         $ban_file = 'ban_quiz.csv';
         
         if (($fichier = fopen($file, 'r')) !== FALSE) {
@@ -26,12 +31,23 @@ function Quiz_Dashboard($file){
                 echo "<td>" . htmlspecialchars($info_quiz[2]) . "</td>"; // Email du créateur
                 echo "<td>" . htmlspecialchars($info_quiz[7]) . "</td>"; // Statut du quiz 
 
+
                 // bouton pour changer l'état d'un quiz
                 echo "<td>";
                 
-                echo "<form method='post' action='ban_quiz.php?name=" . urlencode(htmlspecialchars($info_quiz[0])) . "' >";
-                    echo "<input type='submit' name='creator' value='" . htmlspecialchars($info_quiz[2]) . "'>";
-                    echo ($info_quiz[7] == 'activé' ? 'Désactiver' : 'Activer');
+                echo "<form method='post' action='ban_quiz.php?name=" . urlencode(htmlspecialchars($info_quiz[0])) . "&mail=".htmlspecialchars($info_quiz[2])."' >";
+                $banned = FALSE;
+                if (($handle = fopen($ban_file, 'r')) !== false) {
+                    while (($line = fgetcsv($handle, 1000, ',')) !== false) {
+                        if($line[1] == $info_quiz[2]){      
+                            $banned = TRUE;
+                            break;
+                        }
+                    }
+                    fclose($handle);
+                }
+
+                echo "<input type='submit' name='action' value='" . ($banned ? "Activer" : "Désactiver") . "'>";
                 echo "</form>";
                 echo "</td>";
 
@@ -39,7 +55,7 @@ function Quiz_Dashboard($file){
             }
             fclose($fichier); // Fermeture du fichier
         }
-        
+    echo "</tbody>";
     echo "</table>";
 
 }
@@ -49,13 +65,16 @@ function User_dashboard($file, $role){
     echo "<h2>Comptes " . htmlspecialchars($role) . "</h2>";
     
         echo "<table>";
+        echo "<thead>";
            echo "<tr>";
                 echo "<th>Nom</th>";
                 echo "<th>Email</th>";
                 echo "<th>Etat</th>";
                 echo "<th>Statut</th>";
             echo "</tr>";
-            
+        echo "</thead>";
+        
+        echo "<tbody>";
             $ban_file = 'ban.csv';
             $login_file = 'connexion.csv';
             
@@ -81,10 +100,10 @@ function User_dashboard($file, $role){
                     echo "</td>";
                     // bouton pour bannir l'utilisateur
 
-                    echo "<form method='post' action='ban.php?role=" . urlencode($role) . "' >";
+                    echo "<form method='post' action='ban.php?role=" . urlencode($role) . "&mail=".htmlspecialchars($data[2])."' >";
                     echo "<td>";
                     $banned = FALSE;
-                    if (($handle = fopen($ban_file, 'r')) !== false) { // Correction: utilisation de $ban_file au lieu de $login_file
+                    if (($handle = fopen($ban_file, 'r')) !== false) {
                         while (($line = fgetcsv($handle, 1000, ',')) !== false) {
                             if($line[0] == $data[2]){      
                                 $banned = TRUE;
@@ -94,9 +113,7 @@ function User_dashboard($file, $role){
                         fclose($handle);
                     }
 
-                    // Correction: utilisation de 'name' pour passer l'email de l'utilisateur
-                    echo "<input type='submit' name='user_email' value='" . htmlspecialchars($data[2]) . "'>";
-                    echo ($banned ? "Banni" : "Actif");
+                    echo "<input type='submit' name='statut' value='" . ($banned ? "Banni" : "Actif") . "'>";
                     echo "</td>";
                     echo "</form>";
                     
@@ -104,7 +121,7 @@ function User_dashboard($file, $role){
                 }
                 fclose($fichier); // Fermeture du fichier
             }
-            
+        echo "</tbody>";    
         echo "</table>";
 
 }
@@ -113,6 +130,7 @@ function Role_dashboard($file, $role, $mail){
     echo "<h2>Mes QUIZ</h2>";
     
     echo "<table>";
+    echo "<thead>";
        echo "<tr>";
             echo "<th>Nom</th>";
             echo "<th>Lien</th>";
@@ -120,6 +138,9 @@ function Role_dashboard($file, $role, $mail){
             echo "<th>Durée</th>";
             echo "<th>Résultats</th>";
         echo "</tr>";
+    echo "</thead>";
+
+    echo "<tbody>";  
 
         if (($fichier = fopen($file, 'r')) !== FALSE) {
             while (($data = fgetcsv($fichier, 1000, ",")) !== FALSE ) {
@@ -130,7 +151,7 @@ function Role_dashboard($file, $role, $mail){
                     echo "<td>" . htmlspecialchars($info_quiz[0]) . "</td>"; // Nom du quiz
                     echo "<td><a href='" . htmlspecialchars($info_quiz[3]) . "'>" . htmlspecialchars($info_quiz[3]) . "</a></td>"; // Lien
                     echo "<td>" . htmlspecialchars($info_quiz[4]) . "</td>"; // Nombre de questions
-                    echo "<td>" . htmlspecialchars($info_quiz[5]) . "</td>"; // Durée du quiz 
+                    echo "<td>" . htmlspecialchars($info_quiz[6]) . "</td>"; // Durée du quiz 
                     echo "<td>";
                     echo "<form method='post' action='affichage.php'>";
                     echo "<input type='hidden' name='name' value='" . htmlspecialchars($info_quiz[0]) . "'>";
@@ -143,14 +164,14 @@ function Role_dashboard($file, $role, $mail){
             }
             fclose($fichier); // Fermeture du fichier
         }
+    echo "</tbody>";  
     echo "</table>";
 }
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="accueil.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -189,10 +210,14 @@ if (isset($_SESSION['user']) && isset($_SESSION['role']) && isset($_SESSION['mai
         echo "<h2>Mes QUIZ</h2>";
     
         echo "<table>";
+        echo "<thead>";
            echo "<tr>";
                 echo "<th>Nom</th>";
                 echo "<th>Type</th>";
             echo  "</tr>";
+        echo "</thead>";
+
+        echo "<tbody>"; 
         
         $file = fopen('MesQuiz_'.$mail.'.csv', "r");
         if($file !== false){
@@ -205,18 +230,28 @@ if (isset($_SESSION['user']) && isset($_SESSION['role']) && isset($_SESSION['mai
             fclose($file);
         }
 
-        echo "<form  action='Entreprise_quiz.php?name=Sondage' method='post'>";
-        echo "<input type= 'submit' value = 'Voir quiz'>";
-        echo "</form>";
+        echo "</tbody>"; 
+        echo "</table><BR>";
 
+        if (($fichier = fopen($quiz_file , "r")) !== FALSE) {
+            while (($data = fgetcsv($fichier, 1000, ",")) !== FALSE ) {
+                $info_quiz = str_getcsv($data[0]);
+                // Vérifiez que le rôle et l'email correspondent avant d'afficher les informations du quiz
+                echo "<card> <div class= 'container'>";
+                if($info_quiz[1] == 'Ecole' ) {
+                    echo "<form  action='start_quiz.php?name=".$info_quiz[0]."' method='post'>";
+                } elseif($info_quiz[1] == 'Entreprise'){
+                    echo "<form  action='Entreprise_quiz.php?name=".$info_quiz[0]."' method='post'>";
+                }
+                    echo  "<H4>".$info_quiz[0]."</H4>";
+                    echo "<p>Proposé par : ".$info_quiz[2]. " </p><br/>";
+                    echo "<input type= 'submit' value = 'Voir quiz'>";
+                    echo "</form>";
+                    echo "</card>";
+            }
+        }
     }
     
-
-
-
-
-
-
 } else{
     header("Location: login.php?erreur=3"); 
     exit();
