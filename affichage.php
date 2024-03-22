@@ -1,3 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats</title>
+    <style>
+ 
+body{
+    background-color: #efab23;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+ 
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+ 
+th, td {
+    padding: 12px;
+    text-align: center;
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 2);
+}
+ 
+th {
+    background-color: #e35f5e;
+    color: #fff;
+}
+ 
+td {
+    background-color: #f8f9fa;
+    color: #000;
+    border: 1px solid #dee2e6;
+}
+ 
+td.nom {
+    background-color: #ffc107;
+    color: #000;
+}
+ 
+td.note {
+    background-color: #28a745; /* Couleur de fond pour la note */
+    color: #fff; /* Couleur du texte pour la note */
+}
+ 
+ 
+    </style>
+</head>
+<body>
+
 <?php
  include 'header.php';
 // Les fonctions ind_debut et ind_fin vont nous aider à parcourir le fichier csv 
@@ -127,3 +182,6 @@ function Pourcent($prop,$ind_ques,$file){
     }
 
 ?>
+
+</body>
+</html>
