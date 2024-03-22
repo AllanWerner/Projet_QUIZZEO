@@ -105,9 +105,3 @@ tbody td:hover:before{
     z-index: -1;
 }
 
-.active {
-    color: green;
-}
-.inactive {
-    color: red;
-}
