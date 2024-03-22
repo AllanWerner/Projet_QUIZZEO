@@ -4,6 +4,7 @@ include 'header.php';
 
 //Déclaration des fonctions d'affichage des dashboard 
 
+//Fonction pour le dashboard des quiz pour l'administrateur
 function Quiz_Dashboard($file){
     echo "<h2>Les QUIZ</h2>";
 
@@ -57,7 +58,7 @@ function Quiz_Dashboard($file){
 
 }
 
-
+//Fonction pour le dashboard des utilisateurs pour l'administrateur
 function User_dashboard($file, $role){
     echo "<h2>Comptes " . htmlspecialchars($role) . "</h2>";
     
@@ -123,6 +124,7 @@ function User_dashboard($file, $role){
 
 }
 
+//Fonction pour le dashboard des quiz pour soit le type Ecole soit le type Entreprise
 function Role_dashboard($file, $role, $mail){
     echo "<h2>Mes QUIZ</h2>";
     

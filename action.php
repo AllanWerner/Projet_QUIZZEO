@@ -49,8 +49,8 @@ if (isset($_POST['Create_quiz'])) {
                 array_push($contenu, implode(", ",$info_ques));    // Transforme le tableau $info_ques en chaîne pour être inséré dans le CSV
             }
 
-            array_push( $quiz,implode(", ",$info_quiz ));    // Transforme le tableau $info_quiz en chaîne pour être inséré dans le CSV
-            array_push( $quiz,implode(", ",$contenu ));      // Transforme le tableau $contenu en chaîne pour être inséré dans le CSV
+            array_push( $quiz,implode(",",$info_quiz ));    // Transforme le tableau $info_quiz en chaîne pour être inséré dans le CSV
+            array_push( $quiz,implode(",",$contenu ));      // Transforme le tableau $contenu en chaîne pour être inséré dans le CSV
             fputcsv($file,$quiz);                            // Insère le tableau dans le fichier csv
             fclose($file); // Fermez le fichier 
 
@@ -87,7 +87,6 @@ if (isset($_POST['Create_quiz'])) {
         
     }
 
-
     //Création du fichier  CSV pour stocker l'historique des participants au quiz 
     $nomFichier = "Player_".$nom.".csv";
 
@@ -97,8 +96,6 @@ if (isset($_POST['Create_quiz'])) {
     } else {
         echo "Le fichier existe déjà.";
     }
-
-
     header('location: accueil.php');   // Redirige vers la page d'accueil une fois le  quizz créé
 
 }
