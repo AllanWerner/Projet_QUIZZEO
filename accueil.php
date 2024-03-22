@@ -1,12 +1,11 @@
-<?php include 'header.php';?>
 <?php
+
+include 'header.php';
 
 //Déclaration des fonctions d'affichage des dashboard 
 
 function Quiz_Dashboard($file){
     echo "<h2>Les QUIZ</h2>";
-    
-   
 
     echo "<table>";
     echo "<thead>";
@@ -31,10 +30,8 @@ function Quiz_Dashboard($file){
                 echo "<td>" . htmlspecialchars($info_quiz[2]) . "</td>"; // Email du créateur
                 echo "<td>" . htmlspecialchars($info_quiz[7]) . "</td>"; // Statut du quiz 
 
-
                 // bouton pour changer l'état d'un quiz
                 echo "<td>";
-                
                 echo "<form method='post' action='ban_quiz.php?name=" . urlencode(htmlspecialchars($info_quiz[0])) . "&mail=".htmlspecialchars($info_quiz[2])."' >";
                 $banned = FALSE;
                 if (($handle = fopen($ban_file, 'r')) !== false) {
@@ -131,42 +128,43 @@ function Role_dashboard($file, $role, $mail){
     
     echo "<table>";
     echo "<thead>";
-       echo "<tr>";
-            echo "<th>Nom</th>";
-            echo "<th>Lien</th>";
-            echo "<th>Nombre de questions</th>";
-            echo "<th>Durée</th>";
-            echo "<th>Résultats</th>";
-        echo "</tr>";
+    echo "<tr>";
+    echo "<th>Nom</th>";
+    echo "<th>Lien</th>";
+    echo "<th>Nombre de questions</th>";
+    echo "<th>Durée</th>";
+    echo "<th>Résultats</th>";
+    echo "</tr>";
     echo "</thead>";
 
     echo "<tbody>";  
 
-        if (($fichier = fopen($file, 'r')) !== FALSE) {
-            while (($data = fgetcsv($fichier, 1000, ",")) !== FALSE ) {
-                $info_quiz = str_getcsv($data[0]);
-                // Vérifiez que le rôle et l'email correspondent avant d'afficher les informations du quiz
-                if(($role == $info_quiz[1]) && ($mail == $info_quiz[2])){
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($info_quiz[0]) . "</td>"; // Nom du quiz
-                    echo "<td><a href='" . htmlspecialchars($info_quiz[3]) . "'>" . htmlspecialchars($info_quiz[3]) . "</a></td>"; // Lien
-                    echo "<td>" . htmlspecialchars($info_quiz[4]) . "</td>"; // Nombre de questions
-                    echo "<td>" . htmlspecialchars($info_quiz[6]) . "</td>"; // Durée du quiz 
-                    echo "<td>";
-                    echo "<form method='post' action='affichage.php'>";
-                    echo "<input type='hidden' name='name' value='" . htmlspecialchars($info_quiz[0]) . "'>";
-                    echo "<input type='hidden' name='type' value='" . htmlspecialchars($info_quiz[1]) . "'>";
-                    echo "<input type='submit' value='Voir'>";
-                    echo "</form>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
+    if (($fichier = fopen($file, 'r')) !== FALSE) {
+        while (($data = fgetcsv($fichier, 1000, ",")) !== FALSE ) {
+            $info_quiz = str_getcsv($data[0]);
+            // Vérifiez que le rôle et l'email correspondent avant d'afficher les informations du quiz
+            if(($role == $info_quiz[1]) && ($mail == $info_quiz[2])){
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($info_quiz[0]) . "</td>"; // Nom du quiz
+                echo "<td><a href='" . htmlspecialchars($info_quiz[3]) . "'>" . htmlspecialchars($info_quiz[3]) . "</a></td>"; // Lien
+                echo "<td>" . htmlspecialchars($info_quiz[4]) . "</td>"; // Nombre de questions
+                echo "<td>" . htmlspecialchars($info_quiz[6]) . "</td>"; // Durée du quiz 
+                echo "<td>";
+                echo "<form method='post' action='affichage.php'>";
+                echo "<input type='hidden' name='name' value='" . htmlspecialchars($info_quiz[0]) . "'>";
+                echo "<input type='hidden' name='type' value='" . htmlspecialchars($info_quiz[1]) . "'>";
+                echo "<input type='submit' value='Voir'>";
+                echo "</form>";
+                echo "</td>";
+                echo "</tr>";
             }
-            fclose($fichier); // Fermeture du fichier
         }
+        fclose($fichier); // Fermeture du fichier
+    }
     echo "</tbody>";  
     echo "</table>";
 }
+
 ?>
 
 <!DOCTYPE html>

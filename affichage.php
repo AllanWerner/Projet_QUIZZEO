@@ -87,8 +87,11 @@ function Pourcent($prop,$ind_ques,$file){
                 $np = $info_quiz[5];
             }   
             
-            echo "<tr>";
-                 echo "<th>Question</th>";
+            if(filesize($file) === 0){
+                echo "Aucune réponse pour ce test.";
+            }else{
+                echo "<tr>";
+                echo "<th>Question</th>";
                  
                 for($i = 1; $i <= $np; $i++){
                      echo "<th>P".$i."</th>";
@@ -112,6 +115,8 @@ function Pourcent($prop,$ind_ques,$file){
                 }
      
             }
+            }
+
         } 
         echo "</table>";   
     }
